@@ -6,10 +6,22 @@ import Sidebar from "@/components/Sidebar";
 import Weather from "@/components/Weather";
 import { airConditions, forecast, sideMenu, weeklyForecast } from "@/constants";
 import Image from "next/image";
-import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
 const page = () => {
   const [chosenNav, setChosenNav] = useState("details");
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem("authenticated");
+
+    if (!isAuthenticated) {
+      router.push("/auth/login");
+    }
+  }, []);
+
   return (
     <div className="lg:p-10 p-5 bg-slate-50 ">
       {/* left */}
